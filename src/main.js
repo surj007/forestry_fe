@@ -9,11 +9,15 @@ import store from './store';
 import './styles/normalize.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
-axios.defaults.headers.get['Cache-Control'] = 'no-cache';
-
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = axios;
+Vue.prototype.$http = axios.create({
+  baseURL: 'http://127.0.0.1',
+  timeout: 10000,
+  headers: {
+    'Cache-Control': 'no-cache'
+  }
+});
 
 Vue.use(ElementUI);
 
