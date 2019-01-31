@@ -37,7 +37,7 @@
     <div class="content">
       <h1 class="title">后台管理系统</h1>
 
-      <el-form :model="oFormData" :rules="rules" ref="loginForm">
+      <el-form :model="oFormData" :rules="oRules" ref="loginForm">
         <el-form-item prop="sUsername">
           <div class="w-450">
             <el-input placeholder="请输入用户名" class="change-input__inner" v-model="oFormData.sUsername">
@@ -79,7 +79,7 @@ export default {
         sUsername: '',
         sPassword: ''
       },
-      rules: {
+      oRules: {
         sUsername: [
           { required: true, message: '用户名不能为空', trigger: 'change' }
         ],
@@ -94,9 +94,9 @@ export default {
       try {
         let valid = await this.$refs.loginForm.validate();
         if (valid) {
-            await this.$store.dispatch('login', {oLoginInfo: this.oFormData, oVm: this});
-            //await this.$store.dispatch('getMenu', this);
-            //this.$router.push('/');
+          await this.$store.dispatch('login', {oLoginInfo: this.oFormData, oVm: this});
+          //await this.$store.dispatch('getMenu', this);
+          //this.$router.push('/');
         }
       }
       catch(err) {}
