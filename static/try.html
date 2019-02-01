@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+  <title>oss上传</title>
+</head>
+
+<body>
+  <div id="oss">
+    <h1>{{title}}</h1>
+    <el-upload class="avatar-uploader" :action="oss.host" :data='oss' :show-file-list="false" :on-success="onSuccess" drag>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或
+        <em>点击上传</em>
+      </div>
+
+    </el-upload>
+    <el-input v-model='fileLink' placeholder="oss访问路径"></el-input>
+
+
+
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  var vm = new Vue({
+    el: "#oss",
+    data: {
+      title: "oss上传",
+      oss: {
+        key: '',
+        ossAccessKeyId: '',
+        policy: '',
+        Signature: '',
+        host: "",
+        success_action_status: 200
+      },
+      file: null,
+      fileLink: null
+    },
+    methods: {
+      onSuccess: function (res, file, filelist) {
+        console.log(res);console.log(file);console.log(filelist);
+          vm.fileLink = vm.oss.host + file.name
+          vm.fileLink = `${vm.oss.host}/image/${file.name}`;
+      },
+      getOssSign: function () {
+        axios.get("http://127.0.0.1/users/sign").then(res => {
+          if (res.data.code === 200) {
+            let {
+              dirPath,
+              key,
+              host,
+              policy,
+              signature,
+              ossAccessKeyId
+            } = res.data.data
+            vm.oss.key = dirPath + key + "${filename}"
+            vm.oss.host = host
+            vm.oss.policy = policy
+            vm.oss.signature = Signature
+            vm.oss.ossAccessKeyId = ossAccessKeyId
+          } else {
+            alert(res.data.message)
+          }
+        })
+      }
+    },
+    mounted: function () {
+      this.getOssSign()
+    }
+  })
+</script>
+
+</html>
