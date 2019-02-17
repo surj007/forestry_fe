@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import cookie from 'js-cookie';
 import { Provider } from 'react-redux';
 
 import Page from './Page';
@@ -8,8 +9,10 @@ import store from './store';
 import * as serviceWorker from './serviceWorker';
 
 import 'antd/dist/antd.css';
+import './styles/style.css';
 
-window.axios = axios;
+window.$http = axios;
+window.$cookie = cookie;
 
 ReactDOM.render(
   (

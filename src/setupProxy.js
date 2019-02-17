@@ -1,10 +1,11 @@
 const proxy = require('http-proxy-middleware');
 
 module.exports = (app) => {
-  // app.use(
-  //   proxy('/api', {
-  //     target: 'http://localhost',
-  //     changeOrigin: true
-  //   })
-  // );
+  app.use(
+    proxy('/admin', {
+      target: 'http://localhost',
+      changeOrigin: true,
+      pathRewrite: {'^/admin': ''}
+    })
+  );
 };

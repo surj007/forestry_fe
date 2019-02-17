@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button } from 'antd';
 
-import { login } from '../../store/actions/user-actions';
+import actions from '../../store/actions/index-actions';
 
-import './index.css';
+import './index.less';
 
 class Login extends Component {
   componentWillMount() {
@@ -17,7 +17,10 @@ class Login extends Component {
     this.props.form.validateFields((err, values) => {
       if(!err) {
         this.props.login(values, () => {
-          this.props.history.push('/');
+          this.props.getMenu(() => {
+            window.sessionStorage.setItem('login', 'true');
+            this.props.history.push('/');
+          })
         });
       }
     });
@@ -37,7 +40,7 @@ class Login extends Component {
                 getFieldDecorator('username', {
                   rules: [{ required: true, message: '请输入用户名' }]
                 })(
-                  <Input size="large" prefix={<Icon type="user" />} 
+                  <Input size="large" prefix={ <Icon type="user" /> } 
                   placeholder="请输入用户名" />
                 )
               }        
@@ -47,13 +50,13 @@ class Login extends Component {
                 getFieldDecorator('password', {
                   rules: [{ required: true, message: '请输入密码' }]
                 })(
-                  <Input size="large" prefix={<Icon type="lock" />} 
+                  <Input size="large" prefix={ <Icon type="lock" /> } 
                   type="password" placeholder="请输入密码" />
                 )
               }
             </Form.Item>
             <Form.Item>
-              <Button block type="primary" size="large" onClick={this.submit}>登陆</Button>
+              <Button block type="primary" size="large" onClick={ this.submit }>登陆</Button>
             </Form.Item>
           </Form>
         </div>
@@ -69,7 +72,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  login
+  login: actions.login, 
+  getMenu: actions.getMenu
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Login));
