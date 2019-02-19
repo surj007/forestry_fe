@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 
 import routes from '../../../routes';
@@ -18,7 +17,7 @@ class MenuCustom extends Component {
         }>
           {
             Object.keys(routes).map((item) => {
-              if(this.props.menu.indexOf(item) != -1) {
+              if(window.$session.get('menu').indexOf(item) != -1) {
                 if(routes[item].subs) {
                   return (
                     <SubMenu title={
@@ -64,10 +63,4 @@ class MenuCustom extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    menu: state.menu
-  };
-};
-
-export default connect(mapStateToProps)(withRouter(MenuCustom));
+export default withRouter(MenuCustom);

@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Form, Icon, Input, Button } from 'antd';
-
-import actions from '../../store/actions/index-actions';
 
 import './index.less';
 
 class Login extends Component {
   componentWillMount() {
-    if(this.props.user.uid) {
+    if(window.$session.get('user')) {
       this.props.history.push('/');
     }
   }
 
   submit = () => {
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if(!err) {
-        this.props.login(values, () => {
-          this.props.getMenu(() => {
-            window.sessionStorage.setItem('login', 'true');
-            this.props.history.push('/');
-          })
-        });
+        await window.$service.login(values);
+        await window.$service.getMenu();
+        this.props.history.push('/');
       }
     });
   }
@@ -40,8 +34,7 @@ class Login extends Component {
                 getFieldDecorator('username', {
                   rules: [{ required: true, message: '请输入用户名' }]
                 })(
-                  <Input size="large" prefix={ <Icon type="user" /> } 
-                  placeholder="请输入用户名" />
+                  <Input size="large" prefix={ <Icon type="user" /> } placeholder="请输入用户名" />
                 )
               }        
             </Form.Item>
@@ -50,8 +43,7 @@ class Login extends Component {
                 getFieldDecorator('password', {
                   rules: [{ required: true, message: '请输入密码' }]
                 })(
-                  <Input size="large" prefix={ <Icon type="lock" /> } 
-                  type="password" placeholder="请输入密码" />
+                  <Input size="large" prefix={ <Icon type="lock" /> } type="password" placeholder="请输入密码" />
                 )
               }
             </Form.Item>
@@ -65,15 +57,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
-
-const mapDispatchToProps = {
-  login: actions.login, 
-  getMenu: actions.getMenu
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Login));
+export default Form.create()(Login);

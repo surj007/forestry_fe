@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Menu, Dropdown, Icon } from 'antd';
 
 import routes from '../../../routes';
-import actions from '../../../store/actions/index-actions';
 
 import './index.less';
 
@@ -25,11 +23,9 @@ class HeaderContent extends Component {
     }
   }
 
-  logout = () => {
-    this.props.logout(() => {
-      this.props.delMenu();
-      this.props.history.push('/login');
-    });
+  logout = async () => {
+    await window.$service.logout();
+    this.props.history.push('/login');
   }
 
   render() {
@@ -43,15 +39,12 @@ class HeaderContent extends Component {
 
     return (
       <div className="headerContent">
-        <h3>
-          {
-            this.findTitleByPath()
-          }
-        </h3>
+        <h3>{ this.findTitleByPath() }</h3>
+
         <div>
           <Dropdown overlay={ dropMenu }>
             <a className="ant-dropdown-link" href="javascript: void(0);">
-              { this.props.user.username }
+              { window.$session.get('user').username }
               <Icon type="down" style={{ marginLeft: 5 }} />
             </a>
           </Dropdown>
@@ -61,15 +54,4 @@ class HeaderContent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
-
-const mapDispatchToProps = {
-  logout: actions.logout,
-  delMenu: actions.delMenu
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HeaderContent));
+export default withRouter(HeaderContent);
