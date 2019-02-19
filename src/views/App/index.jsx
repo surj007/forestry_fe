@@ -7,6 +7,8 @@ import MenuCustom from './MenuCustom';
 import HeaderContent from './HeaderContent';
 import Router from './Router';
 
+import './index.less';
+
 const { Header, Sider, Content } = Layout;
 
 class App extends Component {
@@ -18,6 +20,7 @@ class App extends Component {
             this.props.getMenu();
           }
           else {
+            window.sessionStorage.removeItem('login');
             this.props.history.push('/login');
           }
         });
@@ -32,16 +35,16 @@ class App extends Component {
     return (
       <div className="app">
         <Layout>
-          <Sider theme="light">
+          <Sider style={{ height: '100vh', overflow: 'auto' }}>
             <MenuCustom />
           </Sider>
 
           <Layout>
-            <Header style={{ background: '#fff' }}>
+            <Header style={{ background: '#FFF' }}>
               <HeaderContent />
             </Header>
 
-            <Content>
+            <Content className="app-content">
               <Router />
             </Content>
           </Layout>

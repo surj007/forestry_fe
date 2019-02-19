@@ -52,7 +52,7 @@ class HeaderContent extends Component {
           <Dropdown overlay={ dropMenu }>
             <a className="ant-dropdown-link" href="javascript: void(0);">
               { this.props.user.username }
-              <Icon type="down" style={{ marginLeft: '5px' }} />
+              <Icon type="down" style={{ marginLeft: 5 }} />
             </a>
           </Dropdown>
         </div>

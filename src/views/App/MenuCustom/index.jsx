@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 
@@ -11,7 +11,7 @@ class MenuCustom extends Component {
   render() {
     return (
       <div className="menuCustom">
-        <Menu mode="inline" defaultSelectedKeys={ [routes.home.key] } defaultOpenKeys={
+        <Menu mode="inline" theme="dark" defaultSelectedKeys={ [this.props.location.pathname] } defaultOpenKeys={
           Object.keys(routes).map((item) => {
             return routes[item].key
           })
@@ -70,4 +70,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MenuCustom);
+export default connect(mapStateToProps)(withRouter(MenuCustom));
