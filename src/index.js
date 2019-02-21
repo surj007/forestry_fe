@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import cookie from 'js-cookie';
 import { Provider } from 'react-redux';
 import { LocaleProvider } from 'antd';

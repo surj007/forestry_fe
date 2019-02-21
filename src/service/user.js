@@ -1,3 +1,5 @@
+import { message } from 'antd';
+
 export function login(data) {
   return new Promise((resolve) => {
     window.$http({
@@ -22,6 +24,7 @@ export function logout() {
       if(res && res.data.code == 0) {
         window.$session.del('user');
         window.$session.del('menu');
+        message.success('退出成功');
         resolve();
       }
     });
