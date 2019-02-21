@@ -4,12 +4,13 @@ import { Layout } from 'antd';
 import MenuCustom from './MenuCustom';
 import HeaderContent from './HeaderContent';
 import Router from './Router';
+import BreadcrumbCustom from './BreadcrumbCustom';
 
 import './index.less';
 
 const { Header, Sider, Content } = Layout;
 
-export default class App extends Component {
+class App extends Component {
   componentWillMount() {
     if(!window.$session.get('user')) {
       this.props.history.push('/login');
@@ -21,18 +22,24 @@ export default class App extends Component {
       return (
         <div className="app">
           <Layout>
-            <Sider style={{ height: '100vh', overflow: 'auto' }}>
-              <MenuCustom />
-            </Sider>
+            <Header style={{ background: '#FFF', height: 49, paddingLeft: 20 }}>
+              <HeaderContent />
+            </Header>
   
             <Layout>
-              <Header style={{ background: '#FFF' }}>
-                <HeaderContent />
-              </Header>
-  
-              <Content className="app-content">
-                <Router />
-              </Content>
+              <Sider style={{ height: 'calc(100vh - 49px)', overflow: 'auto' }}>
+                <MenuCustom />
+              </Sider>
+
+              <Layout>
+                <Header style={{ background: '#f0f2f5', height: 20, paddingLeft: 20, marginTop: 15 }}>
+                  <BreadcrumbCustom />
+                </Header>
+
+                <Content className="app-content" style={{ marginTop: 15, marginBottom: 15 }}>
+                  <Router />
+                </Content>
+              </Layout>
             </Layout>
           </Layout>
         </div>
@@ -43,3 +50,5 @@ export default class App extends Component {
     }
   }
 }
+
+export default App;

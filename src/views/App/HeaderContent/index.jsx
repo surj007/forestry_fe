@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { Menu, Dropdown, Icon, message, Modal } from 'antd';
 
-import routes from '../../../routes';
 import ChangePwdForm from './ChangePwdForm';
 import ChangeUserInfoForm from './ChangeUserInfoForm';
+import Logo from '../../../assets/img/logo.png';
 
 import './index.less';
 
@@ -12,22 +11,6 @@ class HeaderContent extends Component {
   state = {
     changePwdModal: false,
     changeUserInfoModal:  false
-  } 
-
-  findTitleByPath = () => {
-    let path = this.props.location.pathname;
-    for(let i in routes) {
-      if(routes[i].key == path) {
-        return routes[i].title
-      }
-      else if(routes[i].subs) {
-        for(let j of routes[i].subs) {
-          if(j.key == path) {
-            return j.title
-          }
-        }
-      }
-    }
   }
 
   logout = async () => {
@@ -105,7 +88,11 @@ class HeaderContent extends Component {
 
     return (
       <div className="headerContent">
-        <h3>{ this.findTitleByPath() }</h3>
+        <div style={{ height: 49, display: 'flex', alignItems: 'center' }}>
+          <img src={ Logo } alt="" style={{ height: 35, width: 35 }} />
+
+          <span style={{ marginLeft: 15, color: '#1890ff', fontWeight: 600, fontSize: 18 }}>林业有害生物检疫信息管理系统</span>
+        </div>
 
         <div>
           <Dropdown overlay={ dropMenu }>
@@ -130,4 +117,4 @@ class HeaderContent extends Component {
   }
 }
 
-export default withRouter(HeaderContent);
+export default HeaderContent;

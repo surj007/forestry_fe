@@ -4,7 +4,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import components from '../../../components';
 import routes from '../../../routes';
 
-export default class Router extends Component {
+class Router extends Component {
     render() {
         return (
           <Switch>
@@ -26,3 +26,5 @@ export default class Router extends Component {
         )
     }
 }
+
+export default Router;

@@ -26,7 +26,10 @@ class User extends Component {
   getRoles = () => {
     window.$http({
       url: '/admin/system/role/getRoles',
-      method: 'GET'
+      method: 'GET',
+      params: {
+        roleNameZh: ''
+      }
     }).then((res) => {
       if(res && res.data.code == 0) {
         let rolesAry = [];
@@ -162,6 +165,10 @@ class User extends Component {
 
     const columns = [
       {
+        title: 'id',
+        dataIndex: 'id'
+      },
+      {
         title: '用户名',
         dataIndex: 'username'
       },
@@ -185,6 +192,7 @@ class User extends Component {
       },
       {
         title: '操作',
+        width: 200,
         render: (text, record) => (
           <span>
             <a href="javascript: void(0);" style={{ marginRight: '15px' }} onClick={ ($event) => { this.toggleUserModal($event, '编辑用户', record) } }>编辑</a>
@@ -206,7 +214,7 @@ class User extends Component {
 
         <Table columns={ columns } dataSource={ this.state.tableData } pagination={ false } bordered rowKey={ record => record.id } />
 
-        <Pagination style={{ display: 'flex',justifyContent: 'center', marginTop: 15  }} showQuickJumper 
+        <Pagination style={{ float: 'right', marginTop: 16, marginBottom: 16  }} showQuickJumper 
         showSizeChanger showTotal={ (total) => (`总共 ${total} 条`) } onShowSizeChange={ this.changePageSize }
         total={ this.state.page.total } pageSizeOptions={ ['10', '20', '50'] } onChange={ this.changePageNum } current={ this.state.page.current } />
 
