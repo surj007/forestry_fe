@@ -25,7 +25,7 @@ class User extends Component {
   
   getRoles = () => {
     window.$http({
-      url: '/admin/system/role/getRoles',
+      url: '/admin/system/role/getRolesWithPermission',
       method: 'GET',
       params: {
         roleNameZh: ''
@@ -48,7 +48,7 @@ class User extends Component {
       params: {user, pageNum, pageSize}
     }).then((res) => {
       if(res && res.data.code == 0) {
-        let data = Object.assign({}, this.state.page, {total: res.data.data.pager.total})
+        let data = Object.assign({}, this.state.page, {total: res.data.data.pager.total});
         this.setState({page: data});
         this.setState({tableData: res.data.data.result});
       }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import cookie from 'js-cookie';
 import { Provider } from 'react-redux';
 import { LocaleProvider } from 'antd';
+import { AppContainer } from 'react-hot-loader';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -26,13 +27,32 @@ window.$session = session;
 
 ReactDOM.render(
   (
-    <Provider store={ store }>
-      <LocaleProvider locale={ zh_CN }>
-        <Page />
-      </LocaleProvider>
-    </Provider>
+    <AppContainer>
+      <Provider store={ store }>
+        <LocaleProvider locale={ zh_CN }>
+          <Page />
+        </LocaleProvider>
+      </Provider>
+    </AppContainer>
   ),
   document.getElementById('root')
 );
+
+if(module.hot) {
+  module.hot.accept(() => {
+    ReactDOM.render(
+      (
+        <AppContainer>
+          <Provider store={ store }>
+            <LocaleProvider locale={ zh_CN }>
+              <Page />
+            </LocaleProvider>
+          </Provider>
+        </AppContainer>
+      ),
+      document.getElementById('root')
+    );
+  });
+}
 
 serviceWorker.unregister();
