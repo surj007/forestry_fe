@@ -1,7 +1,10 @@
 import Home from './views/Home';
 import User from './views/System/User';
 import Role from './views/System/Role';
+import File from './views/System/File';
+import Basic from './views/System/Basic';
+import Version from './views/System/Version';
 
 export default {
-  Home, User, Role
+  Home, User, Role, File, Basic, Version
 }

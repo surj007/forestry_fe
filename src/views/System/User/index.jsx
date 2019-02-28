@@ -77,7 +77,7 @@ class User extends Component {
       this.setState({modalTitle: title});
     }
 
-    this.setState({currentUser: record});
+    record ? this.setState({currentBasic: record}) : this.setState({currentBasic: {}});
 
     this.setState({userModal: !this.state.userModal}, () => {
       if(title == '编辑用户') {

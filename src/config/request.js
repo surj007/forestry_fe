@@ -9,7 +9,7 @@ const request = axios.create({
 });
 
 request.interceptors.response.use((res) => {
-  if(res.data.code == 4) {
+  if(res.data.code && res.data.code == 4) {
     Modal.warning({
       title: '提示',
       content: '已超时，请重新登陆',
@@ -20,7 +20,12 @@ request.interceptors.response.use((res) => {
       }
     });
   }
-  else if(res.data.code != 0) {
+  else if(res.status != 200) {
+    console.warn(res.config.url);
+    message.error('网络错误，请重试');
+  }
+  else if(res.data.code && res.data.code != 0) {
+    console.warn(res.config.url);
     message.error(res.data.message);
   }
   return res;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input, Table, Pagination, Modal, message, Form, Checkbox  } from 'antd';
+import { Button, Input, Table, Modal, message, Form, Checkbox  } from 'antd';
 
 import './index.less';
 
