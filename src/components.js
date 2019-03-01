@@ -4,7 +4,9 @@ import Role from './views/System/Role';
 import File from './views/System/File';
 import Basic from './views/System/Basic';
 import Version from './views/System/Version';
+import CompanyInfo from './views/Company/CompanyInfo';
 
 export default {
-  Home, User, Role, File, Basic, Version
+  Home, User, Role, File, Basic, Version,
+  CompanyInfo
 }

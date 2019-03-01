@@ -83,9 +83,9 @@ class Version extends Component {
   }
 
   beforeUpload = async (file) => {
-    // if(file.name.split('.')[1] != 'apk') {
-    //   return false;
-    // }
+    if(file.name.split('.')[1] != 'apk') {
+      return false;
+    }
     if(file.size > 1000 * 1000 * 20) {
       return false;
     }
