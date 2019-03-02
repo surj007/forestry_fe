@@ -30,7 +30,7 @@ request.interceptors.response.use((res) => {
   }
   return res;
 }, (e) => {
-  console.warn(res.config.url, e);
+  console.warn('http status err: ', e);
   message.error('网络错误，请重试');
 });
 
