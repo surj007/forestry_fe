@@ -28,13 +28,18 @@ class MenuCustom extends Component {
                     } key={ routes[item].key }>
                       {
                         routes[item].subs.map((item) => {
-                          return (
-                            <Menu.Item key={ item.key }>
-                              <Link to={ item.key } replace>   
-                                <span>{ item.title }</span>
-                              </Link>
-                            </Menu.Item>
-                          );
+                          if(item.showInMenu) {
+                            return (
+                              <Menu.Item key={ item.key }>
+                                <Link to={ item.key } replace>   
+                                  <span>{ item.title }</span>
+                                </Link>
+                              </Menu.Item>
+                            );
+                          }
+                          else {
+                            return null;
+                          }
                         })
                       }
                     </SubMenu>

@@ -5,8 +5,9 @@ import File from './views/System/File';
 import Basic from './views/System/Basic';
 import Version from './views/System/Version';
 import CompanyInfo from './views/Company/CompanyInfo';
+import CompanyDetail from './views/Company/CompanyDetail';
 
 export default {
   Home, User, Role, File, Basic, Version,
-  CompanyInfo
+  CompanyInfo, CompanyDetail
 }

@@ -1,11 +1,9 @@
-import { SET_USER, DEL_USER } from '../action-types';
+import { SET_COMPANY } from '../action-types';
 
 export default (state = {}, action) => {
   switch(action.type) {
-    case SET_USER:
+    case SET_COMPANY:
       return action.data;
-    case DEL_USER:
-      return {};
     default:
       return state;
   }

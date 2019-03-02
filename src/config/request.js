@@ -21,16 +21,16 @@ request.interceptors.response.use((res) => {
     });
   }
   else if(res.status != 200) {
-    console.warn(res.config.url);
+    console.warn(res.config.url, 'http not 200');
     message.error('网络错误，请重试');
   }
   else if(res.data.code && res.data.code != 0) {
-    console.warn(res.config.url);
+    console.warn(res.config.url, res.data.message);
     message.error(res.data.message);
   }
   return res;
 }, (e) => {
-  console.warn(e);
+  console.warn(res.config.url, e);
   message.error('网络错误，请重试');
 });
 

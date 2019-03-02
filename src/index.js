@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import cookie from 'js-cookie';
+import querystring from 'querystring';
 import { Provider } from 'react-redux';
 import { LocaleProvider } from 'antd';
 import { AppContainer } from 'react-hot-loader';
@@ -24,6 +25,7 @@ window.$http = request;
 window.$cookie = cookie;
 window.$service = service;
 window.$session = session;
+window.$querystring = querystring;
 
 ReactDOM.render(
   (
