@@ -11,7 +11,7 @@ import './index.less';
 const { Header, Sider, Content } = Layout;
 
 class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if(!window.$session.get('user')) {
       this.props.history.push('/login');
     }

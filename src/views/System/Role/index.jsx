@@ -13,7 +13,7 @@ class Role extends Component {
     currentRole: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getRoleInfo(this.state.search);
     this.getPermission();
   }

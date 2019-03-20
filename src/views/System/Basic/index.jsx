@@ -12,7 +12,7 @@ class Basic extends Component {
     currentBasic: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getBasicInfo(this.state.search);
   }
 

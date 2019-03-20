@@ -4,7 +4,7 @@ import { Form, Icon, Input, Button } from 'antd';
 import './index.less';
 
 class Login extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if(window.$session.get('user')) {
       this.props.history.push('/');
     }

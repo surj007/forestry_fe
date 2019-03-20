@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Tabs, Tag } from 'antd';
+import { Row, Col, Form } from 'antd';
+import PropTypes from 'prop-types';
 
 import './index.less';
 
@@ -139,5 +140,10 @@ class CompanyData extends Component {
     )
   }
 }
+
+CompanyData.propTypes = {
+  company: PropTypes.object.isRequired,
+  employee: PropTypes.array.isRequired
+};
 
 export default Form.create()(CompanyData);

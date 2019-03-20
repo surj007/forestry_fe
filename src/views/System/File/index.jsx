@@ -14,7 +14,7 @@ class File extends Component {
     errMsg: ''
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getFileInfo(this.state.search);
   }
 

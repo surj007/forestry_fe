@@ -18,7 +18,7 @@ class User extends Component {
     currentUser: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getUserInfo(this.state.search, this.state.page.current, this.state.page.size);
     this.getRoles();
   }

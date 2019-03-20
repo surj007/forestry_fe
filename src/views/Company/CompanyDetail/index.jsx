@@ -7,11 +7,18 @@ import './index.less';
 
 class CompanyDetail extends Component {
   state = {
-    company: {}
+    company: {},
+    certAmount: {
+      boardCertAmount: {amount: 0},
+      woodCertAmount: {amount: 0}
+    },
+    employee: []
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getCompany();
+    this.getCertAmount();
+    this.getEmployee();
   }
 
   getCompany() {
@@ -19,7 +26,7 @@ class CompanyDetail extends Component {
       url: '/admin/company/getCompanyById',
       method: 'GET',
       params: {
-        id: window.$querystring.parse(this.props.location.search.slice(1, this.props.location.search.length)).id
+        id: window.$querystring.parse(this.props.location.search.slice(1)).id
       }
     }).then((res) => {
       if(res && res.data.code == 0) {
@@ -28,7 +35,38 @@ class CompanyDetail extends Component {
     });
   }
 
+  getCertAmount() {
+    window.$http({
+      url: '/admin/company/getCertAmountById',
+      method: 'GET',
+      params: {
+        id: window.$querystring.parse(this.props.location.search.slice(1)).id
+      }
+    }).then((res) => {
+      if(res && res.data.code == 0) {
+        this.setState({certAmount: res.data.data});
+      }
+    });
+  }
+
+  getEmployee() {
+    window.$http({
+      url: '/admin/company/getEmployeeById',
+      method: 'GET',
+      params: {
+        id: window.$querystring.parse(this.props.location.search.slice(1)).id
+      }
+    }).then((res) => {
+      if(res && res.data.code == 0) {
+        this.setState({employee: res.data.data});
+      }
+    });
+  }
+
   render() {
+    const status = ['', '待审核', '已注册', '未通过', '已注销'];
+    const statusColor = ['', '#108ee9', '#87d068', '#f50', '#eee'];
+
     return (
       <div className="company-info">
         <div className="company-info-header">
@@ -37,7 +75,7 @@ class CompanyDetail extends Component {
               <Col span={ 10 }>
                 <Form.Item label="公司名称">
                   { this.state.company.name }
-                  <Tag color="#87d068" style={{ marginLeft: 24 }}>green</Tag>
+                  <Tag color={ statusColor[this.state.company.status] } style={{ marginLeft: 24 }}>{ status[this.state.company.status] }</Tag>
                 </Form.Item>
               </Col>
 
@@ -51,13 +89,13 @@ class CompanyDetail extends Component {
             <Row gutter={ 16 }>
               <Col span={ 10 }>
                 <Form.Item label="可用原木量">
-                  12345m³
+                  { this.state.certAmount.woodCertAmount.amount + 'm³' }
                 </Form.Item>
               </Col>
 
               <Col span={ 7 }>
                 <Form.Item label="可用板材量">
-                  12345m³
+                  { this.state.certAmount.boardCertAmount.amount + 'm³' }
                 </Form.Item>
               </Col>
             </Row>
@@ -66,7 +104,7 @@ class CompanyDetail extends Component {
 
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="企业信息" key="1">
-            <CompanyData company={ this.state.company } />
+            <CompanyData company={ this.state.company } employee={ this.state.employee } />
           </Tabs.TabPane>
           <Tabs.TabPane tab="开证信息" key="2"></Tabs.TabPane>
           <Tabs.TabPane tab="木材运输证与植物检疫申请" key="3"></Tabs.TabPane>

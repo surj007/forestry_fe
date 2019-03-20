@@ -9,9 +9,9 @@ class CompanyInfo extends Component {
     companyType: []
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.getBasicInfo();
-    this.getCompanyInfo(this.state.companyType[0], '', 2, '');
+    this.getCompanyInfo(this.state.companyType[0], '', '', '');
   }
 
   getBasicInfo = () => {
@@ -24,6 +24,7 @@ class CompanyInfo extends Component {
         }
       }).then((res) => {
         if(res && res.data.code == 0) {
+          res.data.data['企业类型'].info.unshift('全部');
           this.setState({companyType: res.data.data['企业类型'].info}, () => {
             resolve();
           });
@@ -37,7 +38,10 @@ class CompanyInfo extends Component {
       url: '/admin/company/getCompanyList',
       method: 'GET',
       params: {
-        companyType, name, status, store
+        companyType: companyType === '全部' ? '' : companyType, 
+        name, 
+        status, 
+        store
       }
     }).then((res) => {
       if(res && res.data.code == 0) {
@@ -61,6 +65,8 @@ class CompanyInfo extends Component {
   }
 
   render() {
+    const status = ['', '待审核', '已注册', '未通过', '已注销'];
+
     const { getFieldDecorator } = this.props.form;
 
     const columns = [
@@ -89,12 +95,22 @@ class CompanyInfo extends Component {
         dataIndex: 'create_time'
       },
       {
+        title: '状态',
+        dataIndex: 'status',
+        render: (text) => (
+          <span>
+            {
+              status[text]
+            }
+          </span>
+        )
+      },
+      {
         title: '操作',
         width: 200,
         render: (text, record) => (
           <span>
             <a href="javascript: void(0);" style={{ marginRight: '15px' }} onClick={ ($event) => { this.skipNewPath(record.id) } }>查看</a>
-            <a href="javascript: void(0);">编辑</a>
           </span>
         )
       }
@@ -148,9 +164,10 @@ class CompanyInfo extends Component {
             <Form.Item label="状态">
               {
                 getFieldDecorator('status', {
-                  initialValue: 2
+                  initialValue: ""
                 })(
                   <Select style={{ width: 170 }}>
+                    <Select.Option value="">全部</Select.Option>
                     <Select.Option value={ 2 }>已注册</Select.Option>
                     <Select.Option value={ 1 }>待审核</Select.Option>
                     <Select.Option value={ 4 }>已注销</Select.Option>
