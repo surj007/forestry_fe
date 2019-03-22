@@ -61,18 +61,34 @@ export default {
     key: '/app/business', title: '业务办理', icon: 'laptop',
     subs: [
       {
-        key: '/app/business/issue', 
-        title: '开证办理', 
-        component: 'Issue',
+        key: '/app/business/cert', 
+        title: '开证管理', 
+        component: 'Cert',
+        showInMenu: true
+      },
+      {
+        key: '/app/business/plantCert', 
+        title: '运输证与检疫管理', 
+        component: 'PlantCert',
         showInMenu: true
       }
     ]
   },
   inspect: { 
-    key: '/app/inspect/index', 
-    title: '定期检查记录', 
-    icon: 'schedule', 
-    component: 'Inspect',
-    showInMenu: true
+    key: '/app/inspect', title: '审核记录', icon: 'schedule',
+    subs: [
+      {
+        key: '/app/inspect/check', 
+        title: '定期检查记录', 
+        component: 'Check',
+        showInMenu: true
+      },
+      {
+        key: '/app/inspect/quarantine', 
+        title: '定期检疫记录', 
+        component: 'Quarantine',
+        showInMenu: true
+      }
+    ]
   }
 };

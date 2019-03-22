@@ -7,10 +7,21 @@ import routes from '../../../routes';
 const SubMenu = Menu.SubMenu;
 
 class MenuCustom extends Component {
+  setDefaultActiveMenuItem = () => {
+    switch (this.props.location.pathname) {
+      case '/app/company/companyDetail': {
+        return ['/app/company/companyInfo'];
+      }
+      default: {
+        return [this.props.location.pathname];
+      }
+    }
+  }
+
   render() {
     return (
       <div className="menuCustom">
-        <Menu mode="inline" theme="dark" defaultSelectedKeys={ [this.props.location.pathname] } defaultOpenKeys={
+        <Menu mode="inline" theme="dark" selectedKeys={ this.setDefaultActiveMenuItem() } defaultOpenKeys={
           Object.keys(routes).map((item) => {
             return routes[item].key
           })

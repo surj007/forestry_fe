@@ -28,8 +28,8 @@ class BreadcrumbCustom extends Component {
   render() {
     return (
       <Breadcrumb separator=">">
-        <Breadcrumb.Item>{ this.findTitleByPath().first }</Breadcrumb.Item>
-        <Breadcrumb.Item>{ this.findTitleByPath().second }</Breadcrumb.Item>
+        <Breadcrumb.Item>{ this.findTitleByPath() && this.findTitleByPath().first }</Breadcrumb.Item>
+        <Breadcrumb.Item>{ this.findTitleByPath() && this.findTitleByPath().second }</Breadcrumb.Item>
       </Breadcrumb>
     )
   }

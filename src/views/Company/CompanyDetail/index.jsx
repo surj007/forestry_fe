@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Tabs, Tag } from 'antd';
+import { Row, Col, Form, Tabs, Tag, Button } from 'antd';
 
 import CompanyData from './components/CompanyData';
 
@@ -12,13 +12,33 @@ class CompanyDetail extends Component {
       boardCertAmount: {amount: 0},
       woodCertAmount: {amount: 0}
     },
-    employee: []
+    employee: [],
+    basicInfo: {
+      '审核不通过原因': {
+        info: []
+      }
+    }
   }
 
   componentDidMount() {
+    this.getBasicInfo('审核不通过原因');
     this.getCompany();
     this.getCertAmount();
     this.getEmployee();
+  }
+
+  getBasicInfo(basicName) {
+    window.$http({
+      url: '/admin/system/basic/getBasicInfo',
+      method: 'GET',
+      params: {
+        basicName
+      }
+    }).then((res) => {
+      if(res && res.data.code == 0) {
+        this.setState({basicInfo: res.data.data});
+      }
+    });
   }
 
   getCompany() {
@@ -51,7 +71,7 @@ class CompanyDetail extends Component {
 
   getEmployee() {
     window.$http({
-      url: '/admin/company/getEmployeeById',
+      url: '/admin/company/getEmployeeByCompnayId',
       method: 'GET',
       params: {
         id: window.$querystring.parse(this.props.location.search.slice(1)).id
@@ -63,13 +83,23 @@ class CompanyDetail extends Component {
     });
   }
 
+  skipNewPath = (path) => {
+    this.props.history.push({
+      pathname : `/app/business/${path}`,
+      params: {
+        status: 2,
+        companyName: this.state.company.name
+      }
+    });
+  }
+
   render() {
     const status = ['', '待审核', '已注册', '未通过', '已注销'];
     const statusColor = ['', '#108ee9', '#87d068', '#f50', '#eee'];
 
     return (
-      <div className="company-info">
-        <div className="company-info-header">
+      <div className="company-detail">
+        <div>
           <Form layout="inline">
             <Row gutter={ 16 }>
               <Col span={ 10 }>
@@ -99,16 +129,40 @@ class CompanyDetail extends Component {
                 </Form.Item>
               </Col>
             </Row>
+
+            <Form.Item>
+              <Button 
+                type="primary" 
+                onClick={ () => { this.skipNewPath('cert') } }
+              >
+                查看企业开证信息
+              </Button>
+
+              <Button 
+                type="primary" 
+                onClick={ () => { this.skipNewPath('plantCert') } }
+                style={{ marginLeft: 15 }}
+              >
+                查看企业木材运输证与植物检疫申请
+              </Button>
+
+              <Button 
+                type="primary" 
+                onClick={ () => { this.props.history.push('/app/company/companyInfo') } }
+                style={{ marginLeft: 15 }}
+              >
+                返回
+              </Button>
+            </Form.Item>
           </Form>
         </div>
 
-        <Tabs defaultActiveKey="1">
-          <Tabs.TabPane tab="企业信息" key="1">
-            <CompanyData company={ this.state.company } employee={ this.state.employee } />
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="开证信息" key="2"></Tabs.TabPane>
-          <Tabs.TabPane tab="木材运输证与植物检疫申请" key="3"></Tabs.TabPane>
-        </Tabs>
+        <CompanyData 
+          company={ this.state.company } 
+          employee={ this.state.employee } 
+          refuseReason={ this.state.basicInfo['审核不通过原因'].info }
+          updateCompany={ this.getCompany.bind(this) }
+        />
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Menu, Dropdown, Icon, message, Modal } from 'antd';
 
 import ChangePwdForm from './ChangePwdForm';
@@ -117,4 +118,4 @@ class HeaderContent extends Component {
   }
 }
 
-export default HeaderContent;
+export default withRouter(HeaderContent);
