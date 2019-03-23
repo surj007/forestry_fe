@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
-import { Table, message  } from 'antd';
+import { Table, message, Modal } from 'antd';
 
 import SearchHeader from '../components/SearchHeader';
-import ImageList from '../components/ImageList';
+import ImageItem from '../components/ImageItem';
 
 import './index.less';
 
 class Cert extends Component {
   state = {
-    tableData: []
+    tableData: [],
+    imageModal: false,
+    imageList: [
+      {
+        title: '',
+        images: []
+      }
+    ]
   }
 
   getCertList = (data) => {
@@ -27,26 +34,71 @@ class Cert extends Component {
     });
   }
 
-  operateRecord = (item, type, id) => {
+  operateRecord = (item, type, record) => {
     switch (item + type) {
       case '通过原木类开证': {
-        this.invokeCert(id, 'wood_cert', 2);
+        this.invokeCert(record.id, 'wood_cert', 2);
+
         break;
       }
       case '通过板材类开证': {
-        this.invokeCert(id, 'board_cert', 2);
+        this.invokeCert(record.id, 'board_cert', 2);
+
         break;
       }
       case '驳回原木类开证': {
-        this.invokeCert(id, 'wood_cert', 3);
+        this.invokeCert(record.id, 'wood_cert', 3);
+
         break;
       }
       case '驳回板材类开证': {
-        this.invokeCert(id, 'board_cert', 3);
+        this.invokeCert(record.id, 'board_cert', 3);
+
+        break;
+      }
+      case '查看板材类开证': {
+        let imageList = [
+          {
+            title: '1.通关无纸化放行通知单',
+            images: record.noticePic.split(',')
+          },
+          {
+            title: '2.中华人民共和国海关进口货物报关单',
+            images: record.declarationPic.split(',')
+          },
+          {
+            title: '3.合同或销售证明',
+            images: record.contractPic.split(',')
+          }
+        ];
+        this.setState({imageList});
+
+        this.setState({imageModal: true});
+
+        break;
+      }
+      case '查看原木类开证': {
+        let imageList = [
+          {
+            title: '1.太仓出入境检验检疫局进境散装木材准运通知单',
+            images: record.noticePic.split(',')
+          },
+          {
+            title: '2.进口小提单',
+            images: record.ladingPic.split(',')
+          },
+          {
+            title: '3.中华人民共和国海关进口货物报关单',
+            images: record.declarationPic.split(',')
+          }
+        ];
+        this.setState({imageList});
+
+        this.setState({imageModal: true});
+
         break;
       }
       default: {
-
         break;
       }
     }
@@ -62,6 +114,7 @@ class Cert extends Component {
     }).then((res) => {
       if(res && res.data.code == 0) {
         message.success('审核成功');
+        window.$pubsub.publish('Cert_refreshCertList');
       }
     });
   }
@@ -108,7 +161,7 @@ class Cert extends Component {
                     key={ index }
                     style={{ marginLeft: 10 }} 
                     onClick={ 
-                      () => { this.operateRecord(item, record.cert_type, record.id) } 
+                      () => { this.operateRecord(item, record.cert_type, record) } 
                     }
                   >
                     { item }
@@ -142,7 +195,19 @@ class Cert extends Component {
           rowKey={ record => record.number }
         />
 
-        <ImageList />
+        <Modal 
+          title="查看" 
+          visible={ this.state.imageModal } 
+          maskClosable={ false }
+          footer={ null }
+          onCancel={ () => { this.setState({imageModal: false}) } }
+        >
+          {
+            this.state.imageList.map((item, index) => {
+              return <ImageItem title={ item.title } images={ item.images } key={ index } />
+            })
+          }
+        </Modal>
       </div>
     )
   }

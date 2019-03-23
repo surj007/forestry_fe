@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import cookie from 'js-cookie';
-import querystring from 'querystring';
+import Cookie from 'js-cookie';
+import QueryString from 'querystring';
+import PubSub from 'pubsub-js';
 import { Provider } from 'react-redux';
 import { LocaleProvider } from 'antd';
 import { AppContainer } from 'react-hot-loader';
@@ -22,10 +23,11 @@ import './styles/style.css';
 moment.locale('zh-cn');
 
 window.$http = request;
-window.$cookie = cookie;
+window.$cookie = Cookie;
 window.$service = service;
 window.$session = session;
-window.$querystring = querystring;
+window.$querystring = QueryString;
+window.$pubsub = PubSub;
 
 ReactDOM.render(
   (

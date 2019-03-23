@@ -14,12 +14,14 @@ class SearchHeader extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
-    companyName: PropTypes.string
+    companyName: PropTypes.string,
+    type: PropTypes.string
   }
 
   static defaultProps  = {
     status: '',
-    companyName: ''
+    companyName: '',
+    type: 'cert'
   }
 
   state = {
@@ -28,6 +30,9 @@ class SearchHeader extends Component {
 
   componentDidMount () {
     this.props.getList(this.props.form.getFieldsValue());
+    window.$pubsub.subscribe('Cert_refreshCertList', () => {
+      this.props.getList(this.props.form.getFieldsValue());
+    });
   }
 
   render () {
@@ -36,19 +41,23 @@ class SearchHeader extends Component {
     return (
       <div className="search-header">
         <Form layout="inline">
-          <Form.Item label="开证类型">
-            {
-              getFieldDecorator('certType', {
-                initialValue: ''
-              })(
-                <Select style={{ width: 170 }}>
-                  <Select.Option value="">全部</Select.Option>
-                  <Select.Option value="板材类开证">板材类开证</Select.Option>
-                  <Select.Option value="原木类开证">原木类开证</Select.Option>
-                </Select>
-              )
-            }
-          </Form.Item>
+          {
+            this.props.type === 'plantCert' ? null : (
+              <Form.Item label="开证类型">
+                { 
+                  getFieldDecorator('certType', {
+                    initialValue: ''
+                  })(
+                    <Select style={{ width: 170 }}>
+                      <Select.Option value="">全部</Select.Option>
+                      <Select.Option value="板材类开证">板材类开证</Select.Option>
+                      <Select.Option value="原木类开证">原木类开证</Select.Option>
+                    </Select>
+                  )
+                }
+              </Form.Item>
+            )
+          }
 
           <Form.Item label="状态">
             {
