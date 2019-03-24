@@ -41,7 +41,7 @@ class PlantCert extends Component {
         break;
       }
       case '查看': {
-        this.setState({images: record.picture_url.split(',')});
+        this.setState({images: record.picture_url ? record.picture_url.split(',') : []});
 
         this.setState({imageModal: true});
 

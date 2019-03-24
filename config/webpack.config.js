@@ -23,10 +23,11 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+//const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+const shouldUseSourceMap = false;
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -171,6 +172,10 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+    },
+    // 大型第三方库可以使用cdn，在index.html中添加script cdn标签，在此处注册外链
+    externals: {
+      echarts: 'echarts'
     },
     optimization: {
       minimize: isEnvProduction,
@@ -596,6 +601,8 @@ module.exports = function(webpackEnv) {
           silent: true,
           formatter: typescriptFormatter,
         }),
+      // 用于分析打包后的文件体积
+      isEnvProduction && new BundleAnalyzerPlugin()
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

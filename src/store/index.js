@@ -6,5 +6,5 @@ import reducers from './reducers';
 
 export default createStore(
   reducers, 
-  compose(applyMiddleware(reduxThunk), composeWithDevTools())
+  composeWithDevTools(applyMiddleware(reduxThunk))
 );
