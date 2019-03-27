@@ -31,7 +31,12 @@ class PlantCert extends Component {
   operateRecord = (item, record) => {
     switch (item) {
       case '通过': {
-        this.invokePlantCert(record.id, 2);
+        if (record.picture_url) {
+          this.invokePlantCert(record.id, 2);
+        }
+        else {
+          this.invokePlantCert(record.id, 4);
+        }
 
         break;
       }
@@ -69,8 +74,8 @@ class PlantCert extends Component {
   }
 
   render() {
-    const statusMap = ['', '待审核', '已通过', '未通过'];
-    const optMap = ['', ['查看', '通过', '驳回'], ['查看'], ['查看']];
+    const statusMap = ['', '待审核', '已通过', '未通过', '待上传照片'];
+    const optMap = ['', ['查看', '通过', '驳回'], ['查看'], ['查看'], ['查看', '通过', '驳回']];
 
     const columns = [
       {
