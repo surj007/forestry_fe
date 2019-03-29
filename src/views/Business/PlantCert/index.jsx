@@ -10,7 +10,9 @@ class PlantCert extends Component {
   state = {
     tableData: [],
     imageModal: false,
-    images: []
+    images: [],
+    timeList: [],
+    locationList: []
   }
 
   getPlantCertList = (data) => {
@@ -47,6 +49,8 @@ class PlantCert extends Component {
       }
       case '查看': {
         this.setState({images: record.picture_url ? record.picture_url.split(',') : []});
+        this.setState({timeList: record.picture_time ? record.picture_time.split('@') : []});
+        this.setState({locationList: record.picture_location ? record.picture_location.split(',') : []});
 
         this.setState({imageModal: true});
 
@@ -80,7 +84,13 @@ class PlantCert extends Component {
     const columns = [
       {
         title: '申请编号',
-        dataIndex: 'number'
+        dataIndex: 'number',
+        width: 150,
+        fixed: 'left'
+      },
+      {
+        title: '企业名称',
+        dataIndex: 'name'
       },
       {
         title: '植物来源（产地）',
@@ -107,8 +117,48 @@ class PlantCert extends Component {
         dataIndex: 'every_car_amount'
       },
       {
-        title: '收货单位',
+        title: '包装方式',
+        dataIndex: 'packaging'
+      },
+      {
+        title: '规格',
+        dataIndex: 'standard'
+      },
+      {
+        title: '收货单位（个人）',
         dataIndex: 'receive_person'
+      },
+      {
+        title: '收货单位详细地址',
+        dataIndex: 'receive_address'
+      },
+      {
+        title: '收货单位（个人）电话',
+        dataIndex: 'phone'
+      },
+      {
+        title: '收货联系人身份证号码',
+        dataIndex: 'person_id'
+      },
+      {
+        title: '日期',
+        dataIndex: 'date_time'
+      },
+      {
+        title: '申请人',
+        dataIndex: 'apply_person'
+      },
+      {
+        title: '承运人',
+        dataIndex: 'transport_person'
+      },
+      {
+        title: '相对应的报检单号',
+        dataIndex: 'report_number'
+      },
+      {
+        title: '车牌号',
+        dataIndex: 'car_number'
       },
       {
         title: '状态',
@@ -122,6 +172,8 @@ class PlantCert extends Component {
       },
       {
         title: '操作',
+        fixed: 'right',
+        width: 150,
         render: (text, record) => (
           <span>
             {
@@ -163,6 +215,7 @@ class PlantCert extends Component {
           pagination={ pagination } 
           bordered 
           rowKey={ record => record.number }
+          scroll={{ x: 2700 }}
         />
 
         <Modal 
@@ -172,7 +225,12 @@ class PlantCert extends Component {
           footer={ null }
           onCancel={ () => { this.setState({imageModal: false}) } }
         >
-          <ImageItem title="装车图片" images={ this.state.images } />
+          <ImageItem 
+            title="装车图片" 
+            images={ this.state.images } 
+            timeList={ this.state.timeList } 
+            locationList={ this.state.locationList } 
+          />
         </Modal>
       </div>
     )

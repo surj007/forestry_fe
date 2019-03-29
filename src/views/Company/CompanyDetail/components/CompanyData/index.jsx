@@ -7,13 +7,19 @@ import {
   Select,
   Input,
   Button,
-  message
+  message,
+  Modal
 } from 'antd';
 import PropTypes from 'prop-types';
 
 import './index.less';
 
 class CompanyData extends Component {
+  state= {
+    imageModal: false,
+    imageSrc: ''
+  }
+
   submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -34,6 +40,11 @@ class CompanyData extends Component {
         });
       }
     });
+  }
+
+  setImageModalData = (imageSrc) => {
+    this.setState({imageModal: true});
+    this.setState({imageSrc});
   }
 
   render() {
@@ -106,14 +117,14 @@ class CompanyData extends Component {
               <Row style={{ marginTop: 20 }}>
                 <Col span={ 12 }>
                   <Form.Item label="营业执照">
-                    <img src={ this.props.company.licencePic } alt="" className="img" onClick={ () => { window.open(this.props.company.licencePic) } } />
+                    <img src={ this.props.company.licencePic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.company.licencePic) } } />
                   </Form.Item>
                 </Col>
 
                 <Col span={ 12 }>
                   <Form.Item label="法人身份证">
-                    <img src={ this.props.company.cardFrontPic } alt="" className="img" onClick={ () => { window.open(this.props.company.licencePic) } } />
-                    <img src={ this.props.company.cardOppositePic } alt="" className="img" onClick={ () => { window.open(this.props.company.licencePic) } } />
+                    <img src={ this.props.company.cardFrontPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.company.licencePic) } } />
+                    <img src={ this.props.company.cardOppositePic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.company.licencePic) } } />
                   </Form.Item>
                 </Col>
               </Row>
@@ -121,13 +132,13 @@ class CompanyData extends Component {
               <Row style={{ marginTop: 30 }}>
                 <Col span={ 12 }>
                   <Form.Item label="告知书">
-                    <img src={ this.props.company.notificationPic } alt="" className="img" onClick={ () => { window.open(this.props.company.licencePic) } } />
+                    <img src={ this.props.company.notificationPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.company.licencePic) } } />
                   </Form.Item>
                 </Col>
 
                 <Col span={ 12 }>
                   <Form.Item label="承诺书">
-                    <img src={ this.props.company.commitPic } alt="" className="img" onClick={ () => { window.open(this.props.company.licencePic) } } />
+                    <img src={ this.props.company.commitPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.company.licencePic) } } />
                   </Form.Item>
                 </Col>
               </Row>
@@ -205,17 +216,17 @@ class CompanyData extends Component {
               <Row style={{ marginTop: 20 }}>
                 <Col span={ 12 }>
                   <Form.Item label="附件">
-                    <img src={ this.props.employee[0] && this.props.employee[0].socialSecurityPic } alt="" className="img" onClick={ () => { window.open(this.props.employee[0].socialSecurityPic) } } />
-                    <img src={ this.props.employee[0] && this.props.employee[0].cardFrontPic } alt="" className="img" onClick={ () => { window.open(this.props.employee[0].cardFrontPic) } } />
-                    <img src={ this.props.employee[0] && this.props.employee[0].cardOppositePic } alt="" className="img" onClick={ () => { window.open(this.props.employee[0].cardOppositePic) } } />
+                    <img src={ this.props.employee[0] && this.props.employee[0].socialSecurityPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[0] && this.props.employee[0].socialSecurityPic) } } />
+                    <img src={ this.props.employee[0] && this.props.employee[0].cardFrontPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[0] && this.props.employee[0].cardFrontPic) } } />
+                    <img src={ this.props.employee[0] && this.props.employee[0].cardOppositePic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[0] && this.props.employee[0].cardOppositePic) } } />
                   </Form.Item>
                 </Col>
 
                 <Col span={ 12 }>
                   <Form.Item label="附件">
-                    <img src={ this.props.employee[1] && this.props.employee[1].socialSecurityPic } alt="" className="img" onClick={ () => { window.open(this.props.employee[1].socialSecurityPic) } } />
-                    <img src={ this.props.employee[1] && this.props.employee[1].cardFrontPic } alt="" className="img" onClick={ () => { window.open(this.props.employee[1].cardFrontPic) } } />
-                    <img src={ this.props.employee[1] && this.props.employee[1].cardOppositePic } alt="" className="img" onClick={ () => { window.open(this.props.employee[1].cardOppositePic) } } />
+                    <img src={ this.props.employee[1] && this.props.employee[1].socialSecurityPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[1] && this.props.employee[1].socialSecurityPic) } } />
+                    <img src={ this.props.employee[1] && this.props.employee[1].cardFrontPic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[1] && this.props.employee[1].cardFrontPic) } } />
+                    <img src={ this.props.employee[1] && this.props.employee[1].cardOppositePic } alt="" className="img" onClick={ () => { this.setImageModalData(this.props.employee[1] && this.props.employee[1].cardOppositePic) } } />
                   </Form.Item>
                 </Col>
               </Row>
@@ -280,6 +291,15 @@ class CompanyData extends Component {
             </div>
           ) }
         </Form>
+
+        <Modal 
+          title="查看图片" 
+          visible={ this.state.imageModal } 
+          footer={ null }
+          onCancel={ () => { this.setState({imageModal: false}) } }
+        >
+          <img src={ this.state.imageSrc } alt="" className="img_modal" />
+        </Modal>
       </div>
     )
   }

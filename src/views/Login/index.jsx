@@ -26,7 +26,7 @@ class Login extends Component {
     return (
       <div className="login">
         <div className="login-content">
-          <h1 className="login-title">后台管理系统</h1>
+          <h1 className="login-title">林业有害生物检疫信息管理系统</h1>
 
           <Form className="login-form">
             <Form.Item>

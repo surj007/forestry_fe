@@ -129,6 +129,10 @@ class Cert extends Component {
         dataIndex: 'number'
       },
       {
+        title: '企业名称',
+        dataIndex: 'name'
+      },
+      {
         title: '开证类型',
         dataIndex: 'cert_type'
       },
