@@ -42,6 +42,7 @@ class Router extends Component {
             })
           }
         </Suspense>
+        
         <Route render={ () => <Redirect to="/app/home/index" /> } />
       </Switch>
     );

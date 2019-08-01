@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setCompany, setCompanyAsync } from '../../../store/actions';
 import { Modal } from 'antd';
 
 
@@ -19,6 +21,11 @@ class ImageItem extends Component {
   setImageModalData = (imageSrc) => {
     this.setState({imageDetailModal: true});
     this.setState({imageSrc});
+  }
+
+  tesRedux = () => {
+    console.log(this.props.company);
+    this.props.setCompanyAsync({});
   }
 
   render() {
@@ -58,4 +65,13 @@ class ImageItem extends Component {
   }
 }
 
-export default ImageItem;
+const mapStateToPorps = state => {
+  return {
+    company: state.company
+  }
+};
+const mapDispatchToProps = {
+  setCompany, setCompanyAsync
+};
+
+export default connect(mapStateToPorps, mapDispatchToProps)(ImageItem);
