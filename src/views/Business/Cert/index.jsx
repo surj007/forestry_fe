@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Table, message, Modal } from 'antd';
 
 import SearchHeader from '../components/SearchHeader';
@@ -217,4 +218,4 @@ class Cert extends Component {
   }
 }
 
-export default Cert;
+export default withRouter(Cert);

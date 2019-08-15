@@ -1,10 +1,12 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setCompany, setCompanyAsync } from './store/actions';
+import actions from './store/actions';
 
 import App from './views/App';
 import Login from './views/Login';
+
+const { setCompany, setCompanyAsync } = actions;
 
 // 定义函数式组件
 function Page (props) {

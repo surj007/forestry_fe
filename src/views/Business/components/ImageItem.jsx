@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setCompany, setCompanyAsync } from '../../../store/actions';
+import actions from '../../../store/actions';
 import { Modal } from 'antd';
+
+const { setCompany, setCompanyAsync } = actions;
 
 
 class ImageItem extends Component {

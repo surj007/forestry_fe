@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 
 import routes from '../../../routes';
 // import components from '../../../components';
@@ -27,7 +27,8 @@ class Router extends Component {
   render() {
     return (
       <Switch>
-        <Suspense fallback={ <div>Loading...</div> }>
+        {/* Suspense中不要有内容，否则载入的时候会闪下里面的字 */}
+        <Suspense fallback={ <div></div> }>
           {
             Object.keys(routes).map((item) => {
               const route = (r) => {
@@ -49,4 +50,4 @@ class Router extends Component {
   }
 }
 
-export default Router;
+export default withRouter(Router);

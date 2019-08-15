@@ -12,5 +12,5 @@ export function setCompanyAsync (data) {
     setTimeout(() => {
       dispatch(setCompany(data));
     }, 1000);
-  }
+  };
 }

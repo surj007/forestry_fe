@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Table, message, Modal  } from 'antd';
 
 import SearchHeader from '../components/SearchHeader';
@@ -237,4 +238,4 @@ class PlantCert extends Component {
   }
 }
 
-export default PlantCert;
+export default withRouter(PlantCert);
