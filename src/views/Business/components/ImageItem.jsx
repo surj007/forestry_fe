@@ -6,7 +6,6 @@ import { Modal } from 'antd';
 
 const { setCompany, setCompanyAsync } = actions;
 
-
 class ImageItem extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,

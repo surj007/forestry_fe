@@ -6,6 +6,7 @@ import './index.less';
 class Login extends Component {
   componentDidMount() {
     if(window.$session.get('user')) {
+      // 直接和<Route />相连的组件不需要withRouter包裹
       this.props.history.push('/');
     }
   }

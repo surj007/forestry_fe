@@ -11,9 +11,9 @@ const { setCompany, setCompanyAsync } = actions;
 // 定义函数式组件
 function Page (props) {
   return (
-    // props.name
-    // props.company
-    // props.setCompany(data)
+    // props.name 在props中获取上级组件传进来的数据
+    // props.company 在props中获取redux state
+    // props.setCompany(data) 在props中调用redux action
 
     <HashRouter>
       <Switch>
